@@ -1,50 +1,97 @@
 package deck;
 
+import card.CardName;
 import card.UnoCard;
 import deck.abstractClasses.Game;
+import deck.abstractClasses.IBasicDrawPile;
+import deck.abstractClasses.IDiscardPile;
+import player.Player;
+import player.PlayerManagementImpl;
+import player.abstractclasses.IInputHandling;
+import player.abstractclasses.IPlayerManagement;
+import strategy.StrategyManager;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 public class BasicUnoGame extends Game {
-    private Player[] players;
-    private BasicDrawPile drawPile;
-    private DiscardPile discardPile;
+
+    private IDiscardPile discardPile;
+    private Direction direction;
+    private int currentPlayerIndex;
+    public BasicUnoGame(IInputHandling inputHandling, IPlayerManagement iPlayerManagement,IBasicDrawPile drawPile) {
+        super(inputHandling, iPlayerManagement, drawPile);
+        direction = Direction.CLOCKWISE;
+        currentPlayerIndex = 0;
+
+    }
     @Override
-    public void play() {
+    public void play() throws InterruptedException {
+
         super.play();
+        dealCards();
+        UnoCard firstCard = firstCardOnDiscardPile();
+        // rule : if first card is WILD_DRAW_FOUR then re-draw
+        while (firstCard.getName().equals(CardName.WILD_DRAW_FOUR)) {
+            firstCard = firstCardOnDiscardPile();
+        }
+        while(true){
+            Player currentPlayer = this.players[currentPlayerIndex];
+            System.out.print("Player " + currentPlayer.getName() + " cards are : ");
+            currentPlayer.viewPlayerCards();
+            StrategyManager strategyManager = new StrategyManager(discardPile,currentPlayer,direction,drawPile);
+            strategyManager.performStrategy();
+            updatePlayerTurn();
+
+
+
+        }
+
+
+
     }
 
-    @Override
-    public void createPlayers(String[] playersNames) {
-        int cardsCount = 7;
-        this.players = new Player[playersNames.length];
-        for(int i = 0; i < playersNames.length; i++) {
-            players[i] = new Player(playersNames[i],cardsCount);
+
+    private void updatePlayerTurn() {
+        // Update the player index based on the direction of play
+        if (direction == Direction.CLOCKWISE) {
+            // Move to the next player (move forward in the array)
+            currentPlayerIndex = (currentPlayerIndex + 1) % players.length;
+        } else if (direction == Direction.COUNTERCLOCKWISE) {
+            // Move to the previous player (move backward in the array)
+            currentPlayerIndex = (currentPlayerIndex - 1 + players.length) % players.length;
         }
     }
-
-    @Override
-    public void drawPile() {
-        this.drawPile = BasicDrawPile.getInstance();
-        drawPile.resetDrawPile();
-        drawPile.shuffleDrawPile();
-    }
-
-    @Override
-    public void firstPlayerTurn() {
-        Map<String,Integer> playersCards = new HashMap<>();
-        for(int i = 0; i < players.length; i++) {
-            UnoCard playerCard = drawPile.drawCard();
-            players[i].setCheckTurnCard(playerCard);
-            playersCards.put(players[i].getName(), playerCard.getValue());
-        }
-        ////////////// loop to find max value and if two are equal then re-draw cards
-    }
-
     @Override
     public void dealCards() {
 
+        for(int i = 0;i< players.length;i++){
+            ArrayList<UnoCard> cards = players[i].getPlayerCards();
+            if(cards==null){
+                cards = new ArrayList<>();
+            }
+            for(int j = 0;j<players[i].getCardsCount();j++){
+                cards.add(this.drawPile.drawCard());
+            }
+            players[i].setPlayerCards(cards);
+
+        }
     }
+
+    public UnoCard firstCardOnDiscardPile() {
+        this.discardPile = new DiscardPile();
+        UnoCard firstUnoCard = drawPile.drawCard();
+        while(!firstUnoCard.isValidFirstCard()){
+            drawPile.addCard(firstUnoCard);
+            firstUnoCard = drawPile.drawCard();
+
+        }
+
+        discardPile.addCard(firstUnoCard);
+        System.out.println("Discard Card : " + firstUnoCard.getName());
+        return firstUnoCard;
+    }
+
+
 }

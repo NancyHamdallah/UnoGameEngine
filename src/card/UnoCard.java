@@ -11,7 +11,7 @@ public class UnoCard {
 
     public void printCard(UnoCard card){
 
-        System.out.println(card.getColor() + "-" + card.getName());
+        System.out.print("|" + card.getColor() + "-" + card.getName() +"|");
     }
 
     public int getValue(){
@@ -58,6 +58,15 @@ public class UnoCard {
 
     public CardName getName() {
         return name;
+    }
+
+    public boolean isValidFirstCard(){
+        if(this.getName().equals(CardName.getName(14)) //WILD_DRAW_FOUR
+        || this.getName().equals(CardName.getName(13)) // WILD
+        || this.getName().equals(CardName.getName((12)))){ // DRAW_TWO
+            return false;
+        }
+        return true;
     }
 
     public void setColor(CardColor color) {

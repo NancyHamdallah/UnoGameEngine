@@ -1,6 +1,8 @@
-package deck;
+package player;
 
 import card.UnoCard;
+import deck.BasicDrawPile;
+import deck.abstractClasses.IBasicDrawPile;
 
 import java.util.ArrayList;
 
@@ -20,6 +22,15 @@ public class Player {
         playerCards.add(card);
         cardsCount++;
     }
+
+    public void drawCards(IBasicDrawPile basicDrawPile, int cardsNumber) {
+        for (int i = 0; i < cardsNumber; i++) {
+            playerCards.add(basicDrawPile.drawCard());
+            cardsCount++;
+        }
+
+    }
+
 
     public void viewPlayerCards() {
         for(UnoCard card : playerCards) {
