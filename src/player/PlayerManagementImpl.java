@@ -31,11 +31,11 @@ public class PlayerManagementImpl implements IPlayerManagement {
     }
 
     @Override
-    public String firstPlayerTurn() {
+    public int firstPlayerTurn() {
         this.basicDrawPile.resetDrawPile();
         this.basicDrawPile.shuffleDrawPile();
         int count = 0;
-        String firstPlayerName = "";
+        int playerIndex=0;
         ArrayList<UnoCard> checkCards = new ArrayList<>();
         Map<String, Integer> mapCards = new HashMap<>();
         while(true) {
@@ -54,7 +54,7 @@ public class PlayerManagementImpl implements IPlayerManagement {
             for (int i = 0; i < players.length; i++) {
                 if(max<mapCards.get(players[i].getName())) {
                     max = mapCards.get(players[i].getName());
-                    firstPlayerName = players[i].getName();
+                    playerIndex = i;
                 }
 
             }
@@ -80,9 +80,10 @@ public class PlayerManagementImpl implements IPlayerManagement {
                 checkCards.add(players[i].getCheckTurnCard());
             }
             this.basicDrawPile.addCards(checkCards);
+            count = 0 ;
         }
 
-        return firstPlayerName;
+        return playerIndex;
     }
 
     public IBasicDrawPile getDrawPile() {

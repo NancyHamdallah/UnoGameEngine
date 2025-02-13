@@ -11,7 +11,8 @@ public class WildStrategy implements IActionStrategy{
     public static WildStrategy getInstance(){
         return new WildStrategy();
     }
-    public void action(IDiscardPile discardPile, Player player, Direction direction, IBasicDrawPile drawPile) {
-        System.out.println("Wild Strategy");
+    public Direction action(IDiscardPile discardPile, Player player, Direction direction, IBasicDrawPile drawPile) {
+        NumberStrategy.getInstance().action(discardPile, player, direction, drawPile);
+        return direction;
     }
 }

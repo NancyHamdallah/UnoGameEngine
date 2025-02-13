@@ -5,6 +5,6 @@ import player.Player;
 
 public interface IPlayerManagement {
     public Player[] createPlayers(String[] playersNames);
-    public String firstPlayerTurn();
+    public int firstPlayerTurn();
     public IBasicDrawPile getDrawPile();
 }

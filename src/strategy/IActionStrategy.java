@@ -8,5 +8,5 @@ import deck.abstractClasses.IDiscardPile;
 import player.Player;
 
 public interface IActionStrategy {
-    void action(IDiscardPile discardPile, Player player, Direction direction, IBasicDrawPile drawPile);
+    Direction action(IDiscardPile discardPile, Player player, Direction direction, IBasicDrawPile drawPile);
 }

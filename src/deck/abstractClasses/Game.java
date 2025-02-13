@@ -10,6 +10,7 @@ public abstract class Game {
     protected IPlayerManagement playerManagement;
     protected IBasicDrawPile drawPile;
     protected Player[] players;
+    protected int playerIndex;
     public Game(IInputHandling inputHandling, IPlayerManagement iPlayerManagement, IBasicDrawPile drawPile) {
         this.inputHandling = inputHandling;
         this.playerManagement = iPlayerManagement;
@@ -20,14 +21,8 @@ public abstract class Game {
         this.drawPile = playerManagement.getDrawPile();
         players = playerManagement.createPlayers(inputHandling.getPlayersNames());
 
-        String firstPlayerName = playerManagement.firstPlayerTurn();
-        System.out.println("First Player is " + firstPlayerName);
-
-
-
-
-
-
+        playerIndex = playerManagement.firstPlayerTurn();
+        System.out.println("First Player is " + players[playerIndex].getName());
     }
 
     public IPlayerManagement getPlayerManagement() {

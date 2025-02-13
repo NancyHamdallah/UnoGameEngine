@@ -19,11 +19,9 @@ public class BasicUnoGame extends Game {
 
     private IDiscardPile discardPile;
     private Direction direction;
-    private int currentPlayerIndex;
     public BasicUnoGame(IInputHandling inputHandling, IPlayerManagement iPlayerManagement,IBasicDrawPile drawPile) {
         super(inputHandling, iPlayerManagement, drawPile);
         direction = Direction.CLOCKWISE;
-        currentPlayerIndex = 0;
 
     }
     @Override
@@ -37,11 +35,18 @@ public class BasicUnoGame extends Game {
             firstCard = firstCardOnDiscardPile();
         }
         while(true){
-            Player currentPlayer = this.players[currentPlayerIndex];
+            Player currentPlayer = this.players[playerIndex];
+
+            UnoCard discardCard = discardPile.getCard();
+            System.out.print("Discard Card : " );
+            discardCard.printCard(discardCard);
+            System.out.println();
             System.out.print("Player " + currentPlayer.getName() + " cards are : ");
             currentPlayer.viewPlayerCards();
+            System.out.println();
             StrategyManager strategyManager = new StrategyManager(discardPile,currentPlayer,direction,drawPile);
-            strategyManager.performStrategy();
+            direction = strategyManager.performStrategy();
+            //discardPile.setChecked(!discardPile.isChecked());
             updatePlayerTurn();
 
 
@@ -54,13 +59,14 @@ public class BasicUnoGame extends Game {
 
 
     private void updatePlayerTurn() {
+
         // Update the player index based on the direction of play
         if (direction == Direction.CLOCKWISE) {
             // Move to the next player (move forward in the array)
-            currentPlayerIndex = (currentPlayerIndex + 1) % players.length;
+            playerIndex = (playerIndex + 1) % players.length;
         } else if (direction == Direction.COUNTERCLOCKWISE) {
             // Move to the previous player (move backward in the array)
-            currentPlayerIndex = (currentPlayerIndex - 1 + players.length) % players.length;
+            playerIndex = (playerIndex - 1 + players.length) % players.length;
         }
     }
     @Override
@@ -89,9 +95,10 @@ public class BasicUnoGame extends Game {
         }
 
         discardPile.addCard(firstUnoCard);
-        System.out.println("Discard Card : " + firstUnoCard.getName());
+        //System.out.print("Discard Card : ");
+        //firstUnoCard.printCard(firstUnoCard);
+        System.out.println();
         return firstUnoCard;
     }
-
 
 }

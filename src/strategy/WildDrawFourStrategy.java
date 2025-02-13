@@ -11,8 +11,11 @@ public class WildDrawFourStrategy implements IActionStrategy{
     public static WildDrawFourStrategy getInstance(){
         return new WildDrawFourStrategy();
     }
-    public void action(IDiscardPile discardPile, Player player, Direction direction, IBasicDrawPile drawPile) {
-        System.out.println("player:"+player.getName()+"has to draw four cards");
+    public Direction action(IDiscardPile discardPile, Player player, Direction direction, IBasicDrawPile drawPile) {
+        System.out.println("player: "+player.getName()+" has to draw four cards");
         player.drawCards(drawPile,4);
+        discardPile.setChecked(true);
+
+        return direction;
     }
 }

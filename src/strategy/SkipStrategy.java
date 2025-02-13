@@ -12,7 +12,10 @@ public class SkipStrategy implements IActionStrategy {
     public static SkipStrategy getInstance(){
         return new SkipStrategy();
     }
-    public void action(IDiscardPile discardPile, Player player, Direction direction, IBasicDrawPile drawPile) {
+    public Direction action(IDiscardPile discardPile, Player player, Direction direction, IBasicDrawPile drawPile) {
         System.out.println("Turn is skipped");
+        discardPile.setChecked(true);
+
+        return direction;
     }
 }
