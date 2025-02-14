@@ -1,5 +1,7 @@
 package player;
 
+import exception.ValidInputFormatException;
+import exception.ValidNumberOfPlayersException;
 import player.abstractclasses.IInputHandling;
 
 import java.util.HashSet;
@@ -16,9 +18,29 @@ public class InputHandling implements IInputHandling {
         this.myScanner = new Scanner(System.in);
         Set<String> uniqueNames = new HashSet<>();
 
-
         System.out.print("Please enter the number of players : ");
+        boolean validInput = false;
+        while (!validInput) {
+            try {
 
+                if (!myScanner.hasNextInt()) {
+                    throw new ValidInputFormatException();
+                }
+                this.playersNum = myScanner.nextInt();
+                if (playersNum < 2 || playersNum > 10) {
+                    throw new ValidNumberOfPlayersException();
+                } else {
+                    validInput = true;
+                }
+            } catch (ValidInputFormatException e) {
+                System.out.println(e.getMessage());
+                myScanner.next();
+            }
+                catch (ValidNumberOfPlayersException e) {
+                    System.out.println(e.getMessage());
+                }
+        }
+        /*
         while (!myScanner.hasNextInt()) {
             System.out.println("That's not a valid integer. Please enter a valid number.");
             myScanner.next();
@@ -29,6 +51,8 @@ public class InputHandling implements IInputHandling {
             System.out.print("Please enter a valid number of players between 2 and 10 : ");
             playersNum = myScanner.nextInt();
         }
+        */
+
         playersNames = new String[playersNum];
         for(int i = 0; i < playersNum; i++) {
             System.out.print("Player " + (i + 1) + " : ");

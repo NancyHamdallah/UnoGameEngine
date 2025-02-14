@@ -24,8 +24,7 @@ public class BasicUnoGame extends Game {
         direction = Direction.CLOCKWISE;
     }
     @Override
-    public void play() throws InterruptedException {
-
+    public void play()  {
         super.play();
         dealCards();
         UnoCard firstCard = firstCardOnDiscardPile();
@@ -44,7 +43,6 @@ public class BasicUnoGame extends Game {
                 }
             }
             Player currentPlayer = this.players[playerIndex];
-
             UnoCard discardCard = discardPile.getCard();
             System.out.print("Discard Card : " );
             discardCard.printCard(discardCard);
@@ -55,13 +53,7 @@ public class BasicUnoGame extends Game {
             StrategyManager strategyManager = new StrategyManager(discardPile,currentPlayer,direction,drawPile);
             direction = strategyManager.performStrategy();
             updatePlayerTurn();
-
-
-
         }
-
-
-
     }
 
 
@@ -78,7 +70,6 @@ public class BasicUnoGame extends Game {
     }
     @Override
     public void dealCards() {
-
         for(int i = 0;i< players.length;i++){
             ArrayList<UnoCard> cards = players[i].getPlayerCards();
             if(cards==null){
@@ -88,24 +79,17 @@ public class BasicUnoGame extends Game {
                 cards.add(this.drawPile.drawCard());
             }
             players[i].setPlayerCards(cards);
-
         }
     }
-
     public UnoCard firstCardOnDiscardPile() {
         this.discardPile = new DiscardPile();
         UnoCard firstUnoCard = drawPile.drawCard();
         while(!firstUnoCard.isValidFirstCard()){
             drawPile.addCard(firstUnoCard);
             firstUnoCard = drawPile.drawCard();
-
         }
-
         discardPile.addCard(firstUnoCard);
-        //System.out.print("Discard Card : ");
-        //firstUnoCard.printCard(firstUnoCard);
         System.out.println();
         return firstUnoCard;
     }
-
 }

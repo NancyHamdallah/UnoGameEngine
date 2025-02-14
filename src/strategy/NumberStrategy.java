@@ -29,9 +29,6 @@ public class NumberStrategy implements IActionStrategy{
                 allowedCards.add(card);
             }
         }
-            //System.out.print("Your Cards are : " );
-            //player.viewPlayerCards();
-            //System.out.println();
 
             System.out.print("Allowed Cards to drop are: ");
             if(allowedCards.isEmpty()){

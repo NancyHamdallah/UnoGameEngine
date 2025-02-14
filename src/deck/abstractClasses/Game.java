@@ -17,7 +17,7 @@ public abstract class Game {
         this.drawPile = drawPile;
 
     }
-    public void play() throws InterruptedException {
+    public void play()  {
         this.drawPile = playerManagement.getDrawPile();
         players = playerManagement.createPlayers(inputHandling.getPlayersNames());
 
