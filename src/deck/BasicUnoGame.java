@@ -22,7 +22,6 @@ public class BasicUnoGame extends Game {
     public BasicUnoGame(IInputHandling inputHandling, IPlayerManagement iPlayerManagement,IBasicDrawPile drawPile) {
         super(inputHandling, iPlayerManagement, drawPile);
         direction = Direction.CLOCKWISE;
-
     }
     @Override
     public void play() throws InterruptedException {
@@ -35,6 +34,15 @@ public class BasicUnoGame extends Game {
             firstCard = firstCardOnDiscardPile();
         }
         while(true){
+            if(drawPile.isEmpty()){
+                drawPile.getCards().addAll(discardPile.getCards());
+                discardPile.getCards().clear();
+                firstCard = firstCardOnDiscardPile();
+                // rule : if first card is WILD_DRAW_FOUR then re-draw
+                while (firstCard.getName().equals(CardName.WILD_DRAW_FOUR)) {
+                    firstCard = firstCardOnDiscardPile();
+                }
+            }
             Player currentPlayer = this.players[playerIndex];
 
             UnoCard discardCard = discardPile.getCard();
@@ -46,7 +54,6 @@ public class BasicUnoGame extends Game {
             System.out.println();
             StrategyManager strategyManager = new StrategyManager(discardPile,currentPlayer,direction,drawPile);
             direction = strategyManager.performStrategy();
-            //discardPile.setChecked(!discardPile.isChecked());
             updatePlayerTurn();
 
 

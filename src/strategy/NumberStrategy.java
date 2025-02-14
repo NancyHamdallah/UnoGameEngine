@@ -49,6 +49,11 @@ public class NumberStrategy implements IActionStrategy{
 
                 System.out.print("Choose one of them to drop: ");
                 UnoCard droppedCard = dropCard(allowedCards);
+                if(playerCards.isEmpty()){
+                    System.out.println("Winner Winner .. Chicken Dinner");
+                    System.out.println(player.getName() + " is the winner :) ");
+                    System.exit(0);
+                }
                 if (droppedCard.getName() == CardName.WILD_DRAW_FOUR
                         || droppedCard.getName() == CardName.WILD) {
                     System.out.println("You dropped the wild card.Choose Color: 1.RED 2.BLUE 3.GREEN 4.YELLOW");
@@ -68,6 +73,10 @@ public class NumberStrategy implements IActionStrategy{
                             break;
 
                     }
+                }
+                else if(droppedCard.getName() == CardName.REVERSE){
+                    direction = ReverseStrategy.getInstance().action(discardPile, player, direction, drawPile);
+
                 }
                     //remove card from player's cardslist and add it to the discard pile
                     playerCards.remove(droppedCard);

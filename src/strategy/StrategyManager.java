@@ -27,8 +27,8 @@ public class StrategyManager {
                 direction = WildDrawFourStrategy.getInstance().action(discardPile, player, direction, basicDrawPile);
             } else if (discardPile.getCard().getName().equals(CardName.WILD)) {
                 direction = WildStrategy.getInstance().action(discardPile, player, direction, basicDrawPile);
-            } else if (discardPile.getCard().getName().equals(CardName.REVERSE)) {
-                direction = ReverseStrategy.getInstance().action(discardPile, player, direction, basicDrawPile);
+            //} else if (discardPile.getCard().getName().equals(CardName.REVERSE)) {
+               // direction = ReverseStrategy.getInstance().action(discardPile, player, direction, basicDrawPile);
             } else if (discardPile.getCard().getName().equals(CardName.DRAW_TWO)) {
                 direction = DrawTwoStrategy.getInstance().action(discardPile, player, direction, basicDrawPile);
             } else {
