@@ -29,7 +29,6 @@ public class StrategyManager {
             else{
                 direction = NumberStrategy.getInstance().action(discardPile,player,direction,basicDrawPile);
             }
-
         }
         else{
             direction = NumberStrategy.getInstance().action(discardPile,player,direction,basicDrawPile);

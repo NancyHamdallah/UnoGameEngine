@@ -25,6 +25,7 @@ public class BasicDrawPile implements IBasicDrawPile {
         }
         return instance;
     }
+
     public void drawPile() {
         instance.resetDrawPile();
         instance.shuffleDrawPile();

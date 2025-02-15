@@ -12,3 +12,6 @@ public interface IActionStrategy {
             , Direction direction, IBasicDrawPile drawPile);
 }
 
+
+
+

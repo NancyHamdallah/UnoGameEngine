@@ -8,3 +8,7 @@ public interface IPlayerManagement {
     public int firstPlayerTurn();
     public IBasicDrawPile getDrawPile();
 }
+
+
+
+

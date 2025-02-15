@@ -12,3 +12,5 @@ public interface IDiscardPile {
     boolean isChecked();
     void setChecked(boolean checked);
 }
+
+
