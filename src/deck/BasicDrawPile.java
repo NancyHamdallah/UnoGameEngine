@@ -17,12 +17,6 @@ public class BasicDrawPile implements IBasicDrawPile {
     private BasicDrawPile(int numCards) {
         this.cards = new ArrayList<>(numCards);
         this.numCards = numCards;
-
-    }
-
-    public void drawPile() {
-        instance.resetDrawPile();
-        instance.shuffleDrawPile();
     }
     public static BasicDrawPile getInstance() {
         if(instance == null) {
@@ -30,6 +24,10 @@ public class BasicDrawPile implements IBasicDrawPile {
 
         }
         return instance;
+    }
+    public void drawPile() {
+        instance.resetDrawPile();
+        instance.shuffleDrawPile();
     }
     public void resetDrawPile(){
         for(int i = 0; i < CardColor.values().length-1; i++){

@@ -21,19 +21,15 @@ public class StrategyManager {
 
     public Direction performStrategy() {
         if(!discardPile.isChecked()) {
-            if (discardPile.getCard().getName().equals(CardName.SKIP)) {
-                direction = SkipStrategy.getInstance().action(discardPile, player, direction, basicDrawPile);
-            } else if (discardPile.getCard().getName().equals(CardName.WILD_DRAW_FOUR)) {
-                direction = WildDrawFourStrategy.getInstance().action(discardPile, player, direction, basicDrawPile);
-            } else if (discardPile.getCard().getName().equals(CardName.WILD)) {
-                direction = WildStrategy.getInstance().action(discardPile, player, direction, basicDrawPile);
-            //} else if (discardPile.getCard().getName().equals(CardName.REVERSE)) {
-               // direction = ReverseStrategy.getInstance().action(discardPile, player, direction, basicDrawPile);
-            } else if (discardPile.getCard().getName().equals(CardName.DRAW_TWO)) {
-                direction = DrawTwoStrategy.getInstance().action(discardPile, player, direction, basicDrawPile);
-            } else {
-                direction = NumberStrategy.getInstance().action(discardPile, player, direction, basicDrawPile);
+            CardName cardName = discardPile.getCard().getName();
+            IActionStrategy strategy = StrategyFactory.getStrategy(cardName);
+            if(!cardName.equals(CardName.REVERSE)) {
+                direction = strategy.action(discardPile, player, direction, basicDrawPile);
             }
+            else{
+                direction = NumberStrategy.getInstance().action(discardPile,player,direction,basicDrawPile);
+            }
+
         }
         else{
             direction = NumberStrategy.getInstance().action(discardPile,player,direction,basicDrawPile);

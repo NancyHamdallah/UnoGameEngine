@@ -18,3 +18,4 @@ public class DrawTwoStrategy implements IActionStrategy{
         return direction;
     }
 }
+

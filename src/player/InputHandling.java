@@ -40,18 +40,6 @@ public class InputHandling implements IInputHandling {
                     System.out.println(e.getMessage());
                 }
         }
-        /*
-        while (!myScanner.hasNextInt()) {
-            System.out.println("That's not a valid integer. Please enter a valid number.");
-            myScanner.next();
-        }
-
-        this.playersNum = myScanner.nextInt();
-        while( playersNum<2 || playersNum>10) {
-            System.out.print("Please enter a valid number of players between 2 and 10 : ");
-            playersNum = myScanner.nextInt();
-        }
-        */
 
         playersNames = new String[playersNum];
         for(int i = 0; i < playersNum; i++) {
